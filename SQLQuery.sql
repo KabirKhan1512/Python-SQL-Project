@@ -37,9 +37,6 @@ select coins, usd_24h_change
 from crypto_info
 where usd_24h_change < -5;
 
--- Use a window function to rank the coins by usd_market_cap and display each coin’s name along with its rank.
-
-
 -- Calculate the total usd_market_cap and usd_24h_vol for all coins, then compute the percentage of the total market cap that each coin contributes.
 SELECT 
     coins, 
@@ -55,6 +52,8 @@ where abs(usd_24h_change) > (select AVG(ABS(usd_24h_change)) from crypto_info)
 order by usd_24h_change;
 
 
-
-
-
+-- Find coins where 24h volume exceeds 20% of their market cap, indicating unusual trading activity
+select coins, usd_24h_vol
+from crypto_info
+where usd_24h_vol > usd_market_cap * 0.2
+order by usd_24h_vol;
